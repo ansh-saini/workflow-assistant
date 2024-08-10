@@ -1,5 +1,6 @@
 'use client';
 
+import { createBrowserClient } from "@supabase/ssr";
 import Head from 'next/head';
 import * as React from 'react';
 import '@/lib/env';
@@ -9,6 +10,11 @@ import ButtonLink from '@/components/links/ButtonLink';
 import UnderlineLink from '@/components/links/UnderlineLink';
 import UnstyledLink from '@/components/links/UnstyledLink';
 
+export const createClient = () =>
+  createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  );
 /**
  * SVGR Support
  * Caveat: No React Props Type.
