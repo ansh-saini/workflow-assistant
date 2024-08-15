@@ -1,5 +1,5 @@
 // Ideally this file will go one level outside.
-export {}
+export {};
 
 // import { Metadata } from "next"
 // import Link from "next/link"
