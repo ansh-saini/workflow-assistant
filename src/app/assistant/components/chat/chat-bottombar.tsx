@@ -37,6 +37,7 @@ export default function ChatBottombar({
   };
 
   const handleSend = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (message.trim()) {
       handleSubmit(e);
       setMessage('');
@@ -48,10 +49,10 @@ export default function ChatBottombar({
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // if (event.key === 'Enter' && !event.shiftKey) {
-    //   event.preventDefault();
-    //   handleSend();
-    // }
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      (document.getElementById('send-button') as HTMLButtonElement)?.click();
+    }
 
     if (event.key === 'Enter' && event.shiftKey) {
       event.preventDefault();
@@ -175,6 +176,7 @@ export default function ChatBottombar({
             )}
             type='submit'
             form='chat-form'
+            id='send-button'
           >
             <SendHorizontal size={20} className='text-muted-foreground' />
           </Button>

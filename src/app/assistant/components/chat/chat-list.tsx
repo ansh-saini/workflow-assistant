@@ -1,9 +1,8 @@
+import type { Message } from '@ai-sdk/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useRef } from 'react';
 
 import { cn } from '@/lib/utils';
-
-import { Message } from '@/app/data';
 
 import ChatBottombar from './chat-bottombar';
 
