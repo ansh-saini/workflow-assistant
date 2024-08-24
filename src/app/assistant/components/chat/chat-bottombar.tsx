@@ -5,57 +5,40 @@ import {
   Paperclip,
   PlusCircle,
   SendHorizontal,
-  ThumbsUp,
 } from 'lucide-react';
 import Link from 'next/link';
 import React, { useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
-import { loggedInUserData, Message } from '@/app/data';
-
-import { buttonVariants } from '../ui/button';
+import { Button, buttonVariants } from '../ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Textarea } from '../ui/textarea';
 
 interface ChatBottombarProps {
-  sendMessage: (newMessage: Message) => void;
   isMobile: boolean;
+  handleInputChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 export const BottombarIcons = [{ icon: FileImage }, { icon: Paperclip }];
 
 export default function ChatBottombar({
-  sendMessage,
+  handleSubmit,
   isMobile,
+  ...props
 }: ChatBottombarProps) {
   const [message, setMessage] = useState('');
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    props.handleInputChange(event);
     setMessage(event.target.value);
   };
 
-  const handleThumbsUp = () => {
-    const newMessage: Message = {
-      id: message.length + 1,
-      name: loggedInUserData.name,
-      avatar: loggedInUserData.avatar,
-      message: '👍',
-    };
-    sendMessage(newMessage);
-    setMessage('');
-  };
-
-  const handleSend = () => {
+  const handleSend = (e: React.FormEvent<HTMLFormElement>) => {
     if (message.trim()) {
-      const newMessage: Message = {
-        id: message.length + 1,
-        name: loggedInUserData.name,
-        avatar: loggedInUserData.avatar,
-        message: message.trim(),
-      };
-      sendMessage(newMessage);
+      handleSubmit(e);
       setMessage('');
 
       if (inputRef.current) {
@@ -65,10 +48,10 @@ export default function ChatBottombar({
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
-      handleSend();
-    }
+    // if (event.key === 'Enter' && !event.shiftKey) {
+    //   event.preventDefault();
+    //   handleSend();
+    // }
 
     if (event.key === 'Enter' && event.shiftKey) {
       event.preventDefault();
@@ -153,7 +136,9 @@ export default function ChatBottombar({
       </div>
 
       <AnimatePresence initial={false}>
-        <motion.div
+        <motion.form
+          id='chat-form'
+          onSubmit={handleSend}
           key='input'
           className='w-full relative'
           layout
@@ -178,35 +163,21 @@ export default function ChatBottombar({
             placeholder='Aa'
             className=' w-full border rounded-full flex items-center h-9 resize-none overflow-hidden bg-background'
           ></Textarea>
-          <div className='absolute right-2 bottom-0.5  '>
-            <div>emoji picker</div>
-          </div>
-        </motion.div>
+        </motion.form>
 
-        {message.trim() ? (
-          <Link
-            href='#'
+        {message.trim() && (
+          <Button
+            variant='ghost'
+            size='icon'
             className={cn(
-              buttonVariants({ variant: 'ghost', size: 'icon' }),
               'h-9 w-9',
               'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white shrink-0'
             )}
-            onClick={handleSend}
+            type='submit'
+            form='chat-form'
           >
             <SendHorizontal size={20} className='text-muted-foreground' />
-          </Link>
-        ) : (
-          <Link
-            href='#'
-            className={cn(
-              buttonVariants({ variant: 'ghost', size: 'icon' }),
-              'h-9 w-9',
-              'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white shrink-0'
-            )}
-            onClick={handleThumbsUp}
-          >
-            <ThumbsUp size={20} className='text-muted-foreground' />
-          </Link>
+          </Button>
         )}
       </AnimatePresence>
     </div>

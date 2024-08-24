@@ -1,3 +1,5 @@
+import type { Message as MessageType } from '@ai-sdk/react';
+
 export const userData = [
   {
     id: 1,
@@ -88,12 +90,7 @@ export const loggedInUserData = {
 
 export type LoggedInUserData = typeof loggedInUserData;
 
-export interface Message {
-  id: number;
-  avatar: string;
-  name: string;
-  message: string;
-}
+export type Message = MessageType;
 
 export interface User {
   id: number;

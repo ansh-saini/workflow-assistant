@@ -203,7 +203,8 @@
 
 import { useChat } from 'ai/react';
 
-import { ChatLayout } from '@/app/assistant/components/chat/chat-layout';
+import { ChatList } from '@/app/assistant/components/chat/chat-list';
+import ChatTopbar from '@/app/assistant/components/chat/chat-topbar';
 
 export default function Page() {
   const { messages, input, handleInputChange, handleSubmit, addToolResult } =
@@ -227,21 +228,20 @@ export default function Page() {
 
   return (
     <main className='flex h-[calc(100dvh)] flex-col items-center justify-center p-4 md:px-24 py-32 gap-4'>
-      {/* <div className="flex justify-between max-w-5xl w-full items-center">
-        <Link href="#" className="text-4xl font-bold text-gradient">shadcn-chat</Link>
-        <Link
-          href="https://github.com/jakobhoeg/shadcn-chat"
-          className={cn(
-            buttonVariants({ variant: "ghost", size: "icon" }),
-            "h-10 w-10"
-          )}
-        >
-          <GitHubLogoIcon className="w-7 h-7 text-muted-foreground" />
-        </Link>
-      </div> */}
-
+      <pre className='text-xs absolute left-0 bottom-0 size-[400px] overflow-scroll bg-[#f5fcfd] border border-black/50'>
+        {JSON.stringify(messages, null, 2)}
+      </pre>
       <div className='z-10 border rounded-lg max-w-5xl w-full h-full text-sm lg:flex'>
-        <ChatLayout navCollapsedSize={8} />
+        <div className='flex flex-col justify-between w-full h-full'>
+          <ChatTopbar />
+
+          <ChatList
+            messages={messages.filter((x) => Boolean(x.content))}
+            handleSubmit={handleSubmit}
+            handleInputChange={handleInputChange}
+            isMobile={false}
+          />
+        </div>
       </div>
     </main>
   );
