@@ -1,10 +1,6 @@
-import OpenAI from 'openai';
-
 import logger from '@/lib/logger';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+import { openai } from '@/app/api/assistant/helpers/openai';
 
 interface Props {
   message: string;

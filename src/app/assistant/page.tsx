@@ -209,7 +209,7 @@ import ChatTopbar from '@/app/assistant/components/chat/chat-topbar';
 export default function Page() {
   const { messages, input, handleInputChange, handleSubmit, addToolResult } =
     useChat({
-      api: '/api/assistant-v2',
+      api: '/api/assistant',
       maxToolRoundtrips: 5,
 
       // run client-side tools that are automatically executed:

@@ -1,15 +1,11 @@
 import { Event, Grant, WhenType } from 'nylas';
-import OpenAI from 'openai';
 
 import logger from '@/lib/logger';
 
-import { nylas } from '@/app/api/assistant/nylas';
+import { nylas } from '@/app/api/assistant/helpers/nylas';
+import { openai } from '@/app/api/assistant/helpers/openai';
 
 const companyWorkingHours = '9am to 5pm';
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
 
 interface Props {
   name: string;

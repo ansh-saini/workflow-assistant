@@ -4,6 +4,7 @@ import { z } from 'zod';
 
 import { getPersonAvailability } from '@/app/api/assistant/tools/get-person-availability';
 import { getPersonName } from '@/app/api/assistant/tools/get-person-name';
+import { scheduleMeeting } from '@/app/api/assistant/tools/schedule-meeting';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -15,7 +16,6 @@ export async function POST(req: Request) {
     model: openai('gpt-4-turbo'),
     messages: convertToCoreMessages(messages),
     tools: {
-      // server-side tool with execute function:
       getPersonName: {
         description: "Parse the string to extract the user's name.",
         parameters: z.object({
@@ -32,59 +32,18 @@ export async function POST(req: Request) {
         }),
         execute: getPersonAvailability,
       },
-      // client-side tool that starts user interaction:
-      askForConfirmation: {
-        description: 'Ask the user for confirmation.',
+      scheduleMeeting: {
+        description: 'Schedule a meeting with the user.',
         parameters: z.object({
-          message: z.string().describe('The message to ask for confirmation.'),
+          host: z.string().describe('meeting host name'),
+          invitee: z.string().describe('meeting invitee name'),
+          startTime: z.string().describe('meeting start time in format: '),
+          endTime: z.string().describe('meeting end time in format: '),
         }),
-      },
-      // client-side tool that is automatically executed on the client:
-      getLocation: {
-        description:
-          'Get the user location. Always ask for confirmation before using this tool.',
-        parameters: z.object({}),
+        execute: scheduleMeeting,
       },
     },
   });
 
   return result.toDataStreamResponse();
 }
-
-// export async function POST(req: Request) {
-//   const { messages } = await req.json();
-
-//   const result = await streamText({
-//     model: openai('gpt-4-turbo'),
-//     messages: convertToCoreMessages(messages),
-//     tools: {
-//       // server-side tool with execute function:
-//       getWeatherInformation: {
-//         description: 'show the weather in a given city to the user',
-//         parameters: z.object({ city: z.string() }),
-//         // eslint-disable-next-line no-empty-pattern
-//         execute: async ({}: { city: string }) => {
-//           const weatherOptions = ['sunny', 'cloudy', 'rainy', 'snowy', 'windy'];
-//           return weatherOptions[
-//             Math.floor(Math.random() * weatherOptions.length)
-//           ];
-//         },
-//       },
-//       // client-side tool that starts user interaction:
-//       askForConfirmation: {
-//         description: 'Ask the user for confirmation.',
-//         parameters: z.object({
-//           message: z.string().describe('The message to ask for confirmation.'),
-//         }),
-//       },
-//       // client-side tool that is automatically executed on the client:
-//       getLocation: {
-//         description:
-//           'Get the user location. Always ask for confirmation before using this tool.',
-//         parameters: z.object({}),
-//       },
-//     },
-//   });
-
-//   return result.toDataStreamResponse();
-// }
