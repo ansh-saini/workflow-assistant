@@ -4,6 +4,7 @@ import logger from '@/lib/logger';
 
 import { nylas } from '@/app/api/assistant/helpers/nylas';
 import { openai } from '@/app/api/assistant/helpers/openai';
+import { getGrant } from '@/app/api/assistant/tools/get-grant';
 
 const companyWorkingHours = '9am to 5pm';
 
@@ -19,20 +20,6 @@ export const getPersonAvailability = async ({ name }: Props) => {
   const availableSlots = getThreeAvailableTimeSlots(events);
 
   return availableSlots;
-};
-
-const getGrant = async (name: string) => {
-  logger(`Getting Grant for ${name}`);
-  const grants = await nylas.grants.list();
-  const grant = grants.data.find((grant) =>
-    grant.email?.includes(name.toLowerCase())
-  );
-
-  if (!grant) {
-    throw new Error('Grant not found');
-  }
-  logger(grant, 'Got Grant');
-  return grant;
 };
 
 const getUserCalendar = async (grant: Grant) => {

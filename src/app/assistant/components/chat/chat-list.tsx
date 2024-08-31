@@ -64,7 +64,7 @@ export function ChatList({ messages, handleSubmit, ...props }: ChatListProps) {
                     />
                   </Avatar>
                 )} */}
-                <span className=' bg-accent p-3 rounded-md max-w-xs'>
+                <span className='bg-accent p-3 rounded-md max-w-xs'>
                   {message.content}
                 </span>
                 {/* {message.name !== selectedUser.name && (

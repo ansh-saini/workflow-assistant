@@ -5,7 +5,9 @@ import { z } from 'zod';
 
 import { getPersonAvailability } from '@/app/api/assistant/tools/get-person-availability';
 import { getPersonName } from '@/app/api/assistant/tools/get-person-name';
+import { getPersonTasks } from '@/app/api/assistant/tools/get-person-tasks';
 import { scheduleMeeting } from '@/app/api/assistant/tools/schedule-meeting';
+import { getScheduledMeetings } from '@/app/api/assistant/tools/get-scheduled-meetings';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -63,11 +65,26 @@ const tools = {
     execute: getPersonName,
   },
   getPersonAvailability: {
-    description: "Find the user's availability for a meeting.",
+    description:
+      "Find the user's availability for a meeting. These are the available time slots. They are NOT the slots on which the user has events.",
     parameters: z.object({
       name: z.string().describe('user name'),
     }),
     execute: getPersonAvailability,
+  },
+  getScheduledMeetings: {
+    description: "Get the user's scheduled meetings.",
+    parameters: z.object({
+      name: z.string().describe('user name'),
+    }),
+    execute: getScheduledMeetings,
+  },
+  getPersonTasks: {
+    description: "Get the user's tasks.",
+    parameters: z.object({
+      name: z.string().describe('user name'),
+    }),
+    execute: getPersonTasks,
   },
   scheduleMeeting: {
     description: 'Schedule a meeting with the user.',

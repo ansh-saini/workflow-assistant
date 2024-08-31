@@ -11,17 +11,21 @@ export default function ChatTopbar() {
         <Avatar className='flex justify-center items-center'>
           <AvatarImage
             src={AssistantImage.src}
-            alt='WorkFlow Assistant'
+            alt='WorkFlow'
             width={6}
             height={6}
-            className='w-10 h-10 '
+            className='w-10 h-10'
           />
         </Avatar>
         <div className='flex flex-col'>
-          <span className='font-medium'>WorkFlow Assistant</span>
+          <span className='font-medium'>WorkFlow</span>
           <span className='text-xs'>Active</span>
         </div>
       </div>
+
+      {/* <div>
+        <p className='text-slate-500'>You are currently logged in as</p>
+      </div> */}
     </div>
   );
 }

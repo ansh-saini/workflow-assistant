@@ -3,6 +3,7 @@ import { Grant } from 'nylas';
 import logger from '@/lib/logger';
 
 import { nylas } from '@/app/api/assistant/helpers/nylas';
+import { getGrant } from '@/app/api/assistant/tools/get-grant';
 
 interface Props {
   invitee: string;
@@ -58,20 +59,6 @@ export const scheduleMeeting = async (props: Props) => {
   });
 
   return event;
-};
-
-const getGrant = async (name: string) => {
-  logger(`Getting Grant for ${name}`);
-  const grants = await nylas.grants.list();
-  const grant = grants.data.find((grant) =>
-    grant.email?.includes(name.toLowerCase())
-  );
-
-  if (!grant) {
-    throw new Error('Grant not found');
-  }
-  logger(grant, 'Got Grant');
-  return grant;
 };
 
 const getUserCalendar = async (grant: Grant) => {
