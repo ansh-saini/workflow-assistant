@@ -8,17 +8,11 @@ import ChatBottombar from './chat-bottombar';
 
 interface ChatListProps {
   messages?: Message[];
-  isMobile: boolean;
   handleInputChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
-export function ChatList({
-  messages,
-  handleSubmit,
-  isMobile,
-  ...props
-}: ChatListProps) {
+export function ChatList({ messages, handleSubmit, ...props }: ChatListProps) {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -90,7 +84,6 @@ export function ChatList({
       </div>
       <ChatBottombar
         handleSubmit={handleSubmit}
-        isMobile={isMobile}
         handleInputChange={props.handleInputChange}
       />
     </div>
