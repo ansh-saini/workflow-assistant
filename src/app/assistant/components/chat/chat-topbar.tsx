@@ -7,6 +7,8 @@ import { cn } from '@/lib/utils';
 import { Avatar, AvatarImage } from '../ui/avatar';
 import { buttonVariants } from '../ui/button';
 
+import AssistantImage from '~/images/assistant-image.webp';
+
 export const TopbarIcons = [{ icon: Phone }, { icon: Video }, { icon: Info }];
 
 export default function ChatTopbar() {
@@ -15,15 +17,15 @@ export default function ChatTopbar() {
       <div className='flex items-center gap-2'>
         <Avatar className='flex justify-center items-center'>
           <AvatarImage
-            src='https://picsum.photos/40'
-            alt='Corporate Phonebook'
+            src={AssistantImage.src}
+            alt='WorkFlow Assistant'
             width={6}
             height={6}
             className='w-10 h-10 '
           />
         </Avatar>
         <div className='flex flex-col'>
-          <span className='font-medium'>Corporate Phonebook</span>
+          <span className='font-medium'>WorkFlow Assistant</span>
           <span className='text-xs'>Active</span>
         </div>
       </div>

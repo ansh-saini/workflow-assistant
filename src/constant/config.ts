@@ -1,7 +1,6 @@
 export const siteConfig = {
-  title: 'Next.js + Tailwind CSS + TypeScript Starter',
+  title: 'WorkFlow AI',
   description:
-    'A starter for Next.js, Tailwind CSS, and TypeScript with Absolute Import, Seo, Link component, pre-configured with Husky',
-  /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
+    'Your AI Powered Secretary. Delegate your mundane tasks like scheduling meetings, getting task summary, etc to WorkFlow.',
   url: 'https://tsnext-tw.thcl.dev',
 };
