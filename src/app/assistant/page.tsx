@@ -1,6 +1,7 @@
 'use client';
 
 import { useChat } from 'ai/react';
+import { useEffect, useState } from 'react';
 
 import { ChatList } from '@/app/assistant/components/chat/chat-list';
 import ChatTopbar from '@/app/assistant/components/chat/chat-topbar';
@@ -48,6 +49,14 @@ And guess what? I can also schedule meetings for you! 🗓️`,
     },
   });
 
+  const [debugMode, setDebugMode] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem('debugMode') === 'true') {
+      setDebugMode(true);
+    }
+  }, [debugMode]);
+
   return (
     <>
       <div
@@ -63,9 +72,11 @@ And guess what? I can also schedule meetings for you! 🗓️`,
       </div>
 
       <main className='flex h-[calc(100dvh)] flex-col items-center justify-center p-4 md:px-24 py-32 gap-4 pt-10'>
-        <pre className='text-xs absolute left-0 bottom-0 size-[400px] overflow-scroll bg-[#f5fcfd] border border-black/50'>
-          {JSON.stringify(messages, null, 2)}
-        </pre>
+        {debugMode && (
+          <pre className='text-xs absolute left-0 bottom-0 size-[400px] overflow-scroll bg-[#f5fcfd] border border-black/50'>
+            {JSON.stringify(messages, null, 2)}
+          </pre>
+        )}
         <div className='z-10 border rounded-lg max-w-5xl w-full h-full text-sm lg:flex'>
           <div className='flex flex-col justify-between w-full h-full'>
             <ChatTopbar />
