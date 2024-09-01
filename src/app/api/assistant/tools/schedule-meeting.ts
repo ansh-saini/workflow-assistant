@@ -13,6 +13,10 @@ interface Props {
 }
 
 const getTime = (time: string) => {
+  if (time.includes('T')) {
+    return Math.floor(new Date(time).getTime() / 1000);
+  }
+
   const isPM = time.toLowerCase().includes('pm');
   const isAM = time.toLowerCase().includes('am');
 
@@ -90,8 +94,9 @@ async function createEvent({
   host,
   calendarId,
 }: Config) {
+  console.log({ invitee, endTime, startTime, host, calendarId });
   try {
-    await nylas.events.create({
+    const event = await nylas.events.create({
       identifier: host.id,
       requestBody: {
         title: 'Meeting',
@@ -111,8 +116,10 @@ async function createEvent({
         calendarId,
       },
     });
+    return event;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error creating event:', error);
+    return 'There was an error creating the event';
   }
 }
