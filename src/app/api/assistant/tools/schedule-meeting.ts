@@ -91,7 +91,7 @@ async function createEvent({
   calendarId,
 }: Config) {
   try {
-    const event = await nylas.events.create({
+    await nylas.events.create({
       identifier: host.id,
       requestBody: {
         title: 'Meeting',
@@ -102,6 +102,7 @@ async function createEvent({
         participants: [
           {
             status: 'yes',
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             email: invitee.email!,
           },
         ],
@@ -110,9 +111,8 @@ async function createEvent({
         calendarId,
       },
     });
-
-    console.log('Event:', event);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error creating event:', error);
   }
 }

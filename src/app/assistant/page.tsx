@@ -44,9 +44,9 @@ And guess what? I can also schedule meetings for you! 🗓️`,
       },
     ],
 
-    async onToolCall({ toolCall }) {
-      console.log('client-side tool call', toolCall);
-    },
+    // async onToolCall({ toolCall }) {
+    //   console.log('client-side tool call', toolCall);
+    // },
   });
 
   const [debugMode, setDebugMode] = useState(false);

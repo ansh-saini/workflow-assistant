@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { supabase } from '@/lib/supabase';
 
 export const getLeaves = async () => {
