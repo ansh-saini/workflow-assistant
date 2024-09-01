@@ -11,9 +11,14 @@ export default function Page() {
     maxToolRoundtrips: 5,
     initialMessages: [
       {
-        id: '0',
+        id: '-1',
         role: 'system',
         content: `The user's name is Namita.`,
+      },
+      {
+        id: '0',
+        role: 'system',
+        content: `Today's date is ${new Date().toLocaleDateString()}. Use this date to compare with the leave dates, when the user asks you for who's on leave`,
       },
       {
         id: '1',

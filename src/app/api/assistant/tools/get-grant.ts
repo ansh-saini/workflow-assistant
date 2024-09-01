@@ -1,5 +1,6 @@
-import { nylas } from '@/app/api/assistant/helpers/nylas';
 import logger from '@/lib/logger';
+
+import { nylas } from '@/app/api/assistant/helpers/nylas';
 
 export const getGrant = async (name: string) => {
   logger(`Getting Grant for ${name}`);

@@ -6,8 +6,9 @@ import { z } from 'zod';
 import { getPersonAvailability } from '@/app/api/assistant/tools/get-person-availability';
 import { getPersonName } from '@/app/api/assistant/tools/get-person-name';
 import { getPersonTasks } from '@/app/api/assistant/tools/get-person-tasks';
-import { scheduleMeeting } from '@/app/api/assistant/tools/schedule-meeting';
 import { getScheduledMeetings } from '@/app/api/assistant/tools/get-scheduled-meetings';
+import { createLeave, getLeaves } from '@/app/api/assistant/tools/leaves';
+import { scheduleMeeting } from '@/app/api/assistant/tools/schedule-meeting';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -95,5 +96,19 @@ const tools = {
       endTime: z.string().describe('meeting end time in format: '),
     }),
     execute: scheduleMeeting,
+  },
+  getEmployeeLeaves: {
+    description:
+      'Get upcoming leaves of all employees. `leaveDate` is the date of the leave and `employee` is the employee who is taking the leave.',
+    parameters: z.object({}),
+    execute: getLeaves,
+  },
+  createEmployeeLeaves: {
+    description: 'Create a leave for an employee.',
+    parameters: z.object({
+      name: z.string().describe('employee name'),
+      date: z.string().describe('leave date in format: yyyy-mm-dd'),
+    }),
+    execute: createLeave,
   },
 };
