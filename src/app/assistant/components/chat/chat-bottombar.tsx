@@ -69,6 +69,7 @@ export default function ChatBottombar({
           }}
         >
           <Textarea
+            autoFocus
             autoComplete='off'
             value={message}
             ref={inputRef}

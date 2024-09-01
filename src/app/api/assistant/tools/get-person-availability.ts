@@ -6,7 +6,7 @@ import { nylas } from '@/app/api/assistant/helpers/nylas';
 import { openai } from '@/app/api/assistant/helpers/openai';
 import { getGrant } from '@/app/api/assistant/tools/get-grant';
 
-const companyWorkingHours = '9am to 5pm';
+const companyWorkingHours = '10am to 6pm';
 
 interface Props {
   name: string;

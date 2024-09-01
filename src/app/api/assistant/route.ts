@@ -3,6 +3,10 @@ import { convertToCoreMessages, generateText, streamText } from 'ai';
 import MessagingResponse from 'twilio/lib/twiml/MessagingResponse';
 import { z } from 'zod';
 
+import {
+  getEmployee,
+  listEmployees,
+} from '@/app/api/assistant/tools/employees';
 import { getPersonAvailability } from '@/app/api/assistant/tools/get-person-availability';
 import { getPersonName } from '@/app/api/assistant/tools/get-person-name';
 import { getPersonTasks } from '@/app/api/assistant/tools/get-person-tasks';
@@ -110,5 +114,17 @@ const tools = {
       date: z.string().describe('leave date in format: yyyy-mm-dd'),
     }),
     execute: createLeave,
+  },
+  getEmployeeInformation: {
+    description: 'Get information about an employee.',
+    parameters: z.object({
+      name: z.string().describe('employee name'),
+    }),
+    execute: getEmployee,
+  },
+  listAllEmployees: {
+    description: 'List all employees.',
+    parameters: z.object({}),
+    execute: listEmployees,
   },
 };

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { ChatList } from '@/app/assistant/components/chat/chat-list';
 import ChatTopbar from '@/app/assistant/components/chat/chat-topbar';
+import { isLocal } from '@/constant/env';
 
 export default function Page() {
   const { messages, handleInputChange, handleSubmit } = useChat({
@@ -12,33 +13,44 @@ export default function Page() {
     maxToolRoundtrips: 5,
     initialMessages: [
       {
-        id: '-1',
+        id: '0',
         role: 'system',
         content: `The user's name is Namita.`,
       },
       {
-        id: '0',
+        id: '1',
         role: 'system',
         content: `Today's date is ${new Date().toLocaleDateString()}. Use this date to compare with the leave dates, when the user asks you for who's on leave`,
       },
       {
-        id: '1',
+        id: '2',
         role: 'system',
-        content: `Don't use markdown in your messages. Just use properly formatted plain text.`,
+        content: `When you're asked to tell the schedule for the day, include user's calendar events and tasks`,
       },
       {
-        id: '2',
+        id: '3',
+        role: 'system',
+        content: `Use markdown to answer`,
+      },
+      {
+        id: '4',
         role: 'assistant',
-        content: `Hello! I'm WorkFlow! 🌟 Hope you're having a fantastic day! 😊 How can I assist you today?
+        content: `### Hello! I'm WorkFlow! 🌟
 
-You can ask me things like:
+Hope you're having a fantastic day! 😊 How can I assist you today?
 
-📅 What's my schedule for today?
+### You can ask me things like:
+
+📅 What does my day look like?
+
 📆 When's my next meeting?
-🤝 When is Reena available for a meeting?
+
+🤝 When is Priyanka available for a meeting?
 
 👥 How many employees do we have?
+
 🌴 Who's on leave today?
+
 
 And guess what? I can also schedule meetings for you! 🗓️`,
       },
@@ -49,7 +61,7 @@ And guess what? I can also schedule meetings for you! 🗓️`,
     // },
   });
 
-  const [debugMode, setDebugMode] = useState(false);
+  const [debugMode, setDebugMode] = useState(isLocal);
 
   useEffect(() => {
     if (localStorage.getItem('debugMode') === 'true') {
