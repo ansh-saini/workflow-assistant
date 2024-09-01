@@ -1,6 +1,6 @@
 # WorkFlow. Your AI Powered Secretary.
 
-Delegate your mundane tasks like scheduling meetings, getting task summary, etc to WorkFlow.
+<img src="https://raw.githubusercontent.com/ansh-saini/workflow-assistant/main/public/images/og.jpg" />
 
 ### Abilities
 
