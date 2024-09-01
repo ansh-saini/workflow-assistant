@@ -1,4 +1,5 @@
 import { openai } from '@ai-sdk/openai';
+import { openai as OpenAICore } from '@/app/api/assistant/helpers/openai';
 import { convertToCoreMessages, generateText, streamText } from 'ai';
 import MessagingResponse from 'twilio/lib/twiml/MessagingResponse';
 import { z } from 'zod';
@@ -24,24 +25,82 @@ export async function POST(req: Request) {
   const isWhatsapp = channel === 'whatsapp';
 
   if (isWhatsapp) {
+    let textResult = '';
+
     const body = await req.text();
     const message = new URLSearchParams(body).get('Body');
 
     if (!message) return new Response('message is required', { status: 404 });
 
-    const result = await generateText({
-      model: openai('gpt-4-turbo'),
-      messages: convertToCoreMessages([
-        {
-          role: 'user',
-          content: message,
-        },
-      ]),
-      tools,
-    });
+    const startingMessages = convertToCoreMessages([
+      {
+        role: 'system',
+        content: `The user's name is Namita.`,
+      },
+      {
+        role: 'system',
+        content: `Today's date is ${new Date().toLocaleDateString()}. Use this date to compare with the leave dates, when the user asks you for who's on leave`,
+      },
+      {
+        role: 'system',
+        content: `When you're asked to tell the schedule for the day, include user's calendar events and tasks`,
+      },
+      {
+        role: 'system',
+        content: `DO NOT USE Markdown in the messages. Use plain text.`,
+      },
+      {
+        role: 'assistant',
+        content: `### Hello! I'm WorkFlow! 🌟
 
+Hope you're having a fantastic day! 😊 How can I assist you today?
+
+### You can ask me things like:
+
+📅 What does my day look like?
+
+📆 When's my next meeting?
+
+🤝 When is Priyanka available for a meeting?
+
+👥 How many employees do we have?
+
+🌴 Who's on leave today?
+
+And guess what? I can also schedule meetings for you! 🗓️`,
+      },
+      {
+        role: 'user',
+        content: message,
+      },
+    ]);
+
+    while (!textResult) {
+      console.log('Running Again');
+      const result = await generateText({
+        model: openai('gpt-4-turbo'),
+        messages: startingMessages,
+        tools,
+      });
+
+      if (result.toolResults.length > 0 && result.toolCalls.length > 0) {
+        startingMessages.push({
+          role: 'assistant' as const,
+          content: result.toolCalls,
+        });
+
+        startingMessages.push({
+          role: 'tool' as const,
+          content: result.toolResults,
+        });
+      } else {
+        textResult = result.text;
+      }
+    }
+
+    console.log(textResult);
     const twiml = new MessagingResponse();
-    twiml.message(result.text);
+    twiml.message(textResult);
 
     return new Response(twiml.toString(), {
       headers: { 'Content-Type': 'text/xml' },
