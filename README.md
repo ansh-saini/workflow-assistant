@@ -2,17 +2,15 @@
 
 <img src="https://raw.githubusercontent.com/ansh-saini/workflow-assistant/main/public/images/og.jpg" />
 
-### Abilities
+I've created an assistant which has the email context of not just yourself, but your entire company! So in essence, it can act as a knowledge powerhouse for your entire organization.
 
-- Find the best possible time for a meetings
-- Schedule meetings with people
-- Auto-sync company contacts to create an employee directory.
+This assistant is your ultimate personal secretary:
 
-### Channel Agnostic
+- Effortlessly find the best time to meet with anyone.
+- Schedule meetings
+- Keep track of your daily tasks.
+- Instantly see who's on leave and even manage your own leaves.
+- Get information about colleagues at your fingertips.
+- Access critical company details like employee count, company vision, or who to reach out to for feedback.
 
-Works with WhatsApp, Slack, Discord, Custom website, custom app...the integrations are endless.
-
-### Future Scope
-
-- What's on my agenda today?
-- For team leaders: Ability to generate summary of what your team is working on today and what's the progress update.
+And the cherry on top? It’s Channel Agnostic ✨! Whether it’s WhatsApp, Slack, Discord, or even a website or mobile app, this assistant integrates seamlessly with whatever communication platform you’re already using. Just plug it in and let it do the work!
